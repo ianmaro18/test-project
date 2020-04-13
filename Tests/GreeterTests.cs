@@ -23,5 +23,11 @@ namespace Tests
 			var actual = sut.SayHelloName("John");
 			Assert.Equal("Hello John!", actual);
 		}
+
+		[Fact]
+		public void Fail_Test()
+		{
+			Assert.True(false);
+		}
 	}
 }
