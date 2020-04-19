@@ -7,8 +7,8 @@ node {
         }
         
         stage('checkout') {
-            git 'https://github.com/ianmaro18/test-project.git'
-            //git branch: 'feature/AddFailingTest', url: 'https://github.com/ianmaro18/test-project.git'
+            //git 'https://github.com/ianmaro18/test-project.git'
+            git branch: 'feature/AddCodeCoverage', url: 'https://github.com/ianmaro18/test-project.git'
         }
         
         stage('nuget restore') {
@@ -21,12 +21,12 @@ node {
             bat label: '@@@ Running MS Build', script: 'msbuild'
         }
         
-        def build_path = "tests"
+        def build_path = "UnitTests"
         dir(build_path) {
             
             try {
                 stage('run test') {
-                    bat label: '@@@ RestoringRunning Tests', script: 'dotnet test --no-build --logger "trx;LogFileName=testresults.xml"'
+                    bat label: '@@@ RestoringRunning Tests', script: 'dotnet test --no-build --logger "trx;LogFileName=testresults.dotnet.xml"'
                 }
 			}
             catch (err) {
@@ -34,7 +34,7 @@ node {
             }    
             
             stage('publish test') {
-                step([$class: 'XUnitPublisher', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], tools: [MSTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'TestResults/testresults.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])
+                step([$class: 'XUnitPublisher', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], tools: [MSTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'TestResults/testresults.dotnet.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])
             }
 
         }
