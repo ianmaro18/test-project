@@ -11,7 +11,7 @@ namespace UnitTests
 		{
 			var sut = new Greeter();
 			var actual = sut.SayHello();
-			Assert.Equal("Hello World", actual);
+			Assert.Equal("Hello World!", actual);
 		}
 
 	}
