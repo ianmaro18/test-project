@@ -2,6 +2,11 @@
 {
 	public class Greeter
 	{
+		public Greeter()
+		{
+
+		}
+
 		public string SayHello()
 		{
 			return SayHelloName("World");
